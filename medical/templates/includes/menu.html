@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {% if index %}active{% endif %}" href="{% url 'index' %}">Все врачи</a>
+            </li>
+            {% if user.is_patient or user.is_doctor%}
+                <li class="nav-item">
+                    <a class="nav-link {% if schedule %}active{% endif %}" href="{% url 'schedule' %}">Мои записи на прием</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

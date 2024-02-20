@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Доктора{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% include "includes/menu.html" with index=True %}
+
+        <h1>Доктора</h1>
+        <div class="row">
+            {% for doctor in page %}
+                <div class="col">
+                    {% include "includes/doctor_item.html" with doctor=doctor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if page.has_other_pages %}
+            {% include "includes/paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Мой профиль{% endblock %}
+{% block content %}
+{% load user_filters %}
+<div class="row">
+    <div class="col-md-3 mb-3 mt-1">
+        {% include 'includes/doctor_card.html' with doctor=doctor %}
+    </div>
+    <div class="col-md-9">
+        <h3>Мои пациенты</h3>
+        <div class="row">
+            {% for patient in patients%}
+                <div class="col">
+                    <div class="card mb-3 mt-1 shadow-sm">
+                        {% load thumbnail %}
+                        {% thumbnail patient.avatar "960x960" crop="center" upscale=True as im %}
+                            <img class="card-img" src="{{ im.url }}" />
+                        {% endthumbnail %}
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a name="patient_{{ patient.id }}" href="{% url 'profile' patient.id %}">
+                                    <strong class="d-block text-gray-dark">{{ patient.user.first_name }} {{ patient.user.last_name }}</strong>
+                                </a>
+                                {% if patient.get_telegram %}
+                                    <p class="card-text">
+                                        Телеграм: @{{ patient.telegram.username }}
+                                    </p>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<div class="card mb-3 mt-1 shadow-sm">
+    {% load thumbnail %}
+    {% thumbnail patient.avatar "960x960" crop="center" upscale=True as im %}
+        <img class="card-img" src="{{ im.url }}" />
+    {% endthumbnail %}
+    <div class="card-body">
+        <p class="card-text">
+            <a name="patient_{{ patient.id }}" href="{% url 'profile' patient.id %}">
+                <strong class="d-block text-gray-dark">{{ patient.user.first_name }} {{ patient.user.last_name }}</strong>
+            </a>
+            {% if patient.get_telegram %}
+                <p class="card-text">
+                    Телеграм: @{{ patient.telegram.username }}
+                </p>
+            {% endif %}
+        </p>
+        <p class="card-text">
+            Ваша запись: {{ schedule.start_time_strftime }} - {{ schedule.end_time_strftime }}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Мой профиль{% endblock %}
+{% block content %}
+{% load user_filters %}
+<div class="row">
+    <div class="col-md-3 mb-3 mt-1">
+        {% include 'includes/patient_card.html' with patient=patient %}
+    </div>
+    <div class="col-md-9">
+        <div class="row justify-content-center">
+            <div class="col-md-8 p-5">
+                <div class="card">
+                    <div class="card-header">Моя карточка</div>
+                    <div class="card-body">
+    
+                        {% if form.errors %}
+                            {% for error in form.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error|escape }} - {{ form.errors|get_error:error }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post" action="{% url 'profile' patient.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group row p-3" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+                                    <label for="{{ field.id_for_label }}" class="col-md-4 col-form-label text-md-right">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
+                                    <div class="col-md-6">
+    
+                                        {{ field|addclass:"form-control" }}
+                                        {% if field.help_text %}
+                                            <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="col-md-6 offset-md-4 p-3">
+                                <button type="submit" class="btn btn-primary">
+                                        Сохранить
+                                </button>
+                            </div>
+                        </form>
+                    </div> <!-- card body -->
+                </div> <!-- card -->
+            </div> <!-- col -->
+        </div> <!-- row -->
+        
+    </div>
+</div>
+{% endblock %}

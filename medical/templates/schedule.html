@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Мои записи на прием{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% include "includes/menu.html" with schedule=True %}
+
+        <h1>Мои записи на прием</h1>
+        <div class="row">
+            {% for schedule in page %}
+                <div class="col">
+                    {% if is_patient %}
+                        {% include "includes/schedule_item_doctor.html" with schedule=schedule doctor=schedule.doctor %}
+                    {% else %}
+                        {% include "includes/schedule_item_patient.html" with schedule=schedule patient=schedule.patient %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+         </div>
+
+        {% if page.has_other_pages %}
+            {% include "includes/paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
+    </div>
+{% endblock %}
+

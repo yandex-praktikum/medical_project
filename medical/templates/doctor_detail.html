@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Доктор {{ doctor.user.first_name }} {{ doctor.user.last_name }}{% endblock %}
+{% block content %}
+{% load user_filters %}
+<div class="row">
+    <div class="col-md-3 mb-3 mt-1">
+        {% include 'includes/doctor_card.html' with doctor=doctor %}
+    </div>
+    <div class="col-md-9">
+        <h3>Отзывы</h3>
+        <div class="row">
+            {% include 'includes/comments.html' with doctor=doctor items=doctor.reviews.all %}
+        </div>
+    </div>
+</div>
+{% endblock %}
