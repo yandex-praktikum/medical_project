@@ -62,13 +62,13 @@ class DoctorScheduleForm(forms.ModelForm):
         }
         fields = (
             "specialization",
-            "date_due",
             "date_from",
+            "date_due",
         )
         labels = {
             "specialization": "Врач по направлению",
-            "date_due": "Период записи с",
-            "date_from": "Период по",
+            "date_due": "Период по",
+            "date_from": "Период записи с",
         }
 
 
